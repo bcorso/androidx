@@ -239,7 +239,7 @@ class KSTypeExtTest {
         ) { invocation ->
             listOf("main.Subject", "lib.Subject").map {
                 val env = (invocation.processingEnv as JavacProcessingEnv)
-                env.delegate.elementUtils.getTypeElement(it)
+                env.elementUtils.getTypeElement(it)
             }.forEach { subject ->
                 val keyPrefix = subject.qualifiedName.toString() + "."
                 ElementFilter.methodsIn(subject.enclosedElements).map { method ->

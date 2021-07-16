@@ -16,7 +16,7 @@
 
 package androidx.room.compiler.processing
 
-import androidx.room.compiler.processing.javac.JavacProcessingEnv
+import androidx.room.compiler.processing.javac.JavacProcessingEnvImpl
 import androidx.room.compiler.processing.ksp.KspProcessingEnv
 import com.google.devtools.ksp.processing.CodeGenerator
 import com.google.devtools.ksp.processing.KSPLogger
@@ -133,7 +133,7 @@ interface XProcessingEnv {
          * Creates a new [XProcessingEnv] implementation derived from the given Java [env].
          */
         @JvmStatic
-        fun create(env: ProcessingEnvironment): XProcessingEnv = JavacProcessingEnv(env)
+        fun create(env: ProcessingEnvironment): XProcessingEnv = JavacProcessingEnvImpl(env)
 
         /**
          * Creates a new [XProcessingEnv] implementation derived from the given KSP environment.

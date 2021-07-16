@@ -25,7 +25,7 @@ internal class JavacRawType(
     original: JavacType
 ) : XRawType {
     private val erased = env.typeUtils.erasure(original.typeMirror)
-    private val typeUtils = env.delegate.typeUtils
+    private val typeUtils = env.typeUtils
 
     override val typeName: TypeName = erased.safeTypeName()
 

@@ -184,5 +184,5 @@ class XConvertersTest {
     }
 
     private fun XTestInvocation.getJavacTypeElement(fqn: String) =
-        (this.processingEnv as JavacProcessingEnv).delegate.elementUtils.getTypeElement(fqn)
+        (this.processingEnv as JavacProcessingEnv).elementUtils.getTypeElement(fqn)
 }
