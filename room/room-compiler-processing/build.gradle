@@ -19,8 +19,39 @@ import androidx.build.LibraryType
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 plugins {
+    id "com.github.johnrengelman.shadow"
+    id 'maven-publish'
     id("AndroidXPlugin")
     id("kotlin")
+}
+
+configurations {
+    // Config for dependencies that will be shadowed / jarjared
+    shadowed {
+        // We only want to bundle auto-common and not its transitive deps.
+        transitive = false
+    }
+}
+
+shadowJar {
+    archiveClassifier = ""  // postfix of merged jar
+    configurations = [project.configurations.shadowed]
+    relocate 'com.google.auto.common', 'androidx.room.shaded.auto.common'
+    relocate 'androidx.room.compiler.processing', 'androidx.room.shaded.compiler.processing'
+}
+
+publishing {
+    publications {
+        shadow(MavenPublication) { publication ->
+            project.shadow.component(publication)
+        }
+    }
+    // Publish to build output repository.
+    repositories {
+        maven {
+            url = uri("$buildDir/shadow")
+        }
+    }
 }
 
 dependencies {
@@ -28,7 +59,7 @@ dependencies {
     api(libs.javapoet)
     api(libs.kotlinPoet)
     implementation(libs.guava)
-    implementation(libs.autoCommon)
+    shadowed(libs.autoCommon)
     implementation(libs.autoValueAnnotations)
 
     implementation(libs.kotlinMetadataJvm)
