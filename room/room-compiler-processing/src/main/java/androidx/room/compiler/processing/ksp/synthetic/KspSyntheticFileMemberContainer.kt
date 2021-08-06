@@ -19,6 +19,7 @@ package androidx.room.compiler.processing.ksp.synthetic
 import androidx.room.compiler.processing.XAnnotation
 import androidx.room.compiler.processing.XAnnotationBox
 import androidx.room.compiler.processing.XEquality
+import androidx.room.compiler.processing.XMemberContainer
 import androidx.room.compiler.processing.ksp.KspMemberContainer
 import androidx.room.compiler.processing.ksp.KspType
 import com.google.devtools.ksp.symbol.KSDeclaration
@@ -43,6 +44,9 @@ internal class KspSyntheticFileMemberContainer(
         get() = null
 
     override val declaration: KSDeclaration?
+        get() = null
+
+    override val enclosingElement: XMemberContainer?
         get() = null
 
     override val className: ClassName by lazy {

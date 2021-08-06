@@ -17,6 +17,7 @@
 package androidx.room.compiler.processing.ksp
 
 import androidx.room.compiler.processing.XAnnotated
+import androidx.room.compiler.processing.XElement
 import androidx.room.compiler.processing.XExecutableParameterElement
 import androidx.room.compiler.processing.XType
 import androidx.room.compiler.processing.ksp.KspAnnotated.UseSiteFilter.Companion.NO_USE_SITE_OR_METHOD_PARAMETER
@@ -38,6 +39,8 @@ internal class KspExecutableParameterElement(
 
     override val hasDefaultValue: Boolean
         get() = parameter.hasDefault
+
+    override val enclosingElement: XElement = method
 
     override val type: KspType by lazy {
         parameter.typeAsMemberOf(

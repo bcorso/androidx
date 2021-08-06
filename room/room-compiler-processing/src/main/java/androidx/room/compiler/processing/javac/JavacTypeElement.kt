@@ -20,6 +20,7 @@ import androidx.room.compiler.processing.XEnumEntry
 import androidx.room.compiler.processing.XEnumTypeElement
 import androidx.room.compiler.processing.XFieldElement
 import androidx.room.compiler.processing.XHasModifiers
+import androidx.room.compiler.processing.XMemberContainer
 import androidx.room.compiler.processing.XMethodElement
 import androidx.room.compiler.processing.XTypeElement
 import androidx.room.compiler.processing.javac.kotlin.KotlinMetadataElement
@@ -54,9 +55,8 @@ internal sealed class JavacTypeElement(
     override val className: ClassName by lazy {
         ClassName.get(element)
     }
-    override val enclosingTypeElement: XTypeElement? by lazy {
-        element.enclosingType(env)
-    }
+
+    override val enclosingTypeElement: XTypeElement? get() = enclosingElement as? XTypeElement
 
     private val _declaredFields by lazy {
         ElementFilter.fieldsIn(element.enclosedElements)

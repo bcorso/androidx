@@ -41,6 +41,12 @@ import javax.lang.model.type.TypeMirror
 object XConverters {
 
     @JvmStatic
+    fun XElement.isJavac(): Boolean = this is JavacElement
+
+    @JvmStatic
+    fun XType.isJavac(): Boolean = this is JavacType
+
+    @JvmStatic
     fun XRoundEnv.toJavac(): RoundEnvironment = (this as JavacRoundEnv).delegate
 
     @JvmStatic

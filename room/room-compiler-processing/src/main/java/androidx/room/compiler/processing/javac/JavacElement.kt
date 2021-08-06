@@ -21,6 +21,7 @@ import androidx.room.compiler.processing.XAnnotation
 import androidx.room.compiler.processing.XAnnotationBox
 import androidx.room.compiler.processing.XElement
 import androidx.room.compiler.processing.XEquality
+import androidx.room.compiler.processing.XMemberContainer
 import androidx.room.compiler.processing.unwrapRepeatedAnnotationsFromContainer
 import com.google.auto.common.MoreElements
 import com.google.auto.common.MoreElements.isAnnotationPresent
@@ -33,6 +34,10 @@ internal abstract class JavacElement(
     protected val env: JavacProcessingEnv,
     open val element: Element
 ) : XElement, XEquality, InternalXAnnotated {
+    override val enclosingElement: XElement? by lazy {
+        element.enclosingType(env)
+    }
+
     override fun <T : Annotation> getAnnotations(
         annotation: KClass<T>,
         containerAnnotation: KClass<out Annotation>?

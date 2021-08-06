@@ -17,6 +17,7 @@
 package androidx.room.compiler.processing.ksp.synthetic
 
 import androidx.room.compiler.processing.XAnnotated
+import androidx.room.compiler.processing.XElement
 import androidx.room.compiler.processing.XEquality
 import androidx.room.compiler.processing.XExecutableParameterElement
 import androidx.room.compiler.processing.XHasModifiers
@@ -199,6 +200,9 @@ internal sealed class KspSyntheticPropertyMethodElement(
                 delegate = origin.field.declaration.setter?.parameter,
                 filter = NO_USE_SITE_OR_SET_PARAM
             ) {
+
+            override val enclosingElement: XElement?
+                get() = null
 
             override val name: String by lazy {
                 val originalName = origin.accessor.parameter.name?.asString()

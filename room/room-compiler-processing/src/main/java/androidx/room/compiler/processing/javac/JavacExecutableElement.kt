@@ -18,6 +18,7 @@ package androidx.room.compiler.processing.javac
 
 import androidx.room.compiler.processing.XExecutableElement
 import androidx.room.compiler.processing.XHasModifiers
+import androidx.room.compiler.processing.XMemberContainer
 import androidx.room.compiler.processing.XNullability
 import androidx.room.compiler.processing.javac.kotlin.KmExecutable
 import androidx.room.compiler.processing.javac.kotlin.descriptor
@@ -38,6 +39,8 @@ internal abstract class JavacExecutableElement(
     val descriptor by lazy {
         element.descriptor()
     }
+
+    override val enclosingElement: XMemberContainer = super.enclosingElement as XMemberContainer
 
     override val parameters: List<JavacMethodParameter> by lazy {
         element.parameters.mapIndexed { index, variable ->
