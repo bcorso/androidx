@@ -72,18 +72,6 @@ object XConverters {
         JavacAnnotation(env as JavacProcessingEnv, this)
 
     @JvmStatic
-    fun Element.toXProcessing(env: XProcessingEnv): XElement {
-        return when (this) {
-            is TypeElement -> this.toXProcessing(env)
-            is ExecutableElement -> this.toXProcessing(env)
-            is VariableElement -> this.toXProcessing(env)
-            else -> error(
-                "Don't know how to convert element of type '${this::class}' to a XElement"
-            )
-        }
-    }
-
-    @JvmStatic
     fun TypeElement.toXProcessing(env: XProcessingEnv): XTypeElement =
         (env as JavacProcessingEnv).wrapTypeElement(this)
 

@@ -19,6 +19,7 @@ package androidx.room.compiler.processing.javac
 import androidx.room.compiler.processing.XNullability
 import com.google.auto.common.MoreElements
 import javax.lang.model.element.Element
+import javax.lang.model.element.ElementKind
 
 private val NONNULL_ANNOTATIONS = arrayOf(
     "androidx.annotation.NonNull",

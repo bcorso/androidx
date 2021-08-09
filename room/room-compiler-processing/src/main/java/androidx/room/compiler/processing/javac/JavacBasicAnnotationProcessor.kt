@@ -57,7 +57,7 @@ abstract class JavacBasicAnnotationProcessor :
             xStep.annotations().forEach { annotation ->
                 xElementsByAnnotation[annotation] =
                     elementsByAnnotation[annotation].mapNotNull { element ->
-                        xEnv.wrapAnnotatedElement(element, annotation)
+                        xEnv.wrapElement(element)
                     }.toSet()
             }
             return xStep.process(xEnv, xElementsByAnnotation).map {

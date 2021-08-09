@@ -135,8 +135,6 @@ internal class JavacProcessingEnv(
         )
     }
 
-    fun wrapTypeElement(element: TypeElement) = typeElementStore[element]
-
     /**
      * Wraps the given java processing type into an XType.
      *
@@ -198,29 +196,36 @@ internal class JavacProcessingEnv(
         } as T
     }
 
-    internal fun wrapAnnotatedElement(
-        element: Element,
-        annotationName: String
-    ): XElement {
-        return when (element) {
-            is VariableElement -> {
-                wrapVariableElement(element)
-            }
-            is TypeElement -> {
-                wrapTypeElement(element)
-            }
-            is ExecutableElement -> {
-                wrapExecutableElement(element)
-            }
-            is PackageElement -> {
-                error(
-                    "Cannot get elements with annotation $annotationName. Package " +
-                        "elements are not supported by XProcessing."
-                )
-            }
-            else -> error("Unsupported element $element with annotation $annotationName")
+    /**
+     * Wraps the given java processing element into an [JavacElement].
+     */
+    fun wrapElement(element: Element): JavacElement {
+        return when (element.kind) {
+            ElementKind.CLASS,
+            ElementKind.INTERFACE,
+            ElementKind.ENUM,
+            ElementKind.ANNOTATION_TYPE ->
+                wrapTypeElement(element as TypeElement)
+            ElementKind.METHOD,
+            ElementKind.CONSTRUCTOR,
+            ElementKind.INSTANCE_INIT,
+            ElementKind.STATIC_INIT ->
+                wrapExecutableElement(element as ExecutableElement)
+            ElementKind.FIELD,
+            ElementKind.ENUM_CONSTANT,
+            ElementKind.LOCAL_VARIABLE,
+            ElementKind.PARAMETER,
+            ElementKind.EXCEPTION_PARAMETER,
+            ElementKind.RESOURCE_VARIABLE ->
+                wrapVariableElement(element as VariableElement)
+            ElementKind.PACKAGE ->
+                error("Cannot get element $element. Package elements are not supported by " +
+                        "XProcessing.")
+            else -> error("Unsupported element $element of kind ${element.kind}")
         }
     }
+
+    fun wrapTypeElement(element: TypeElement) = typeElementStore[element]
 
     fun wrapExecutableElement(element: ExecutableElement): JavacExecutableElement {
         val enclosingType = element.requireEnclosingType(this)

@@ -34,7 +34,7 @@ internal abstract class JavacElement(
     open val element: Element
 ) : XElement, XEquality, InternalXAnnotated {
     override val enclosingElement: XElement? by lazy {
-        element.enclosingType(env)
+        env.wrapElement(element.enclosingElement)
     }
 
     override fun <T : Annotation> getAnnotations(
