@@ -18,6 +18,7 @@ package androidx.room.compiler.processing.ksp.synthetic
 
 import androidx.room.compiler.processing.XAnnotated
 import androidx.room.compiler.processing.XEquality
+import androidx.room.compiler.processing.XExecutableElement
 import androidx.room.compiler.processing.XExecutableParameterElement
 import androidx.room.compiler.processing.XType
 import androidx.room.compiler.processing.ksp.KspAnnotated
@@ -44,6 +45,8 @@ internal class KspSyntheticContinuationParameterElement(
         delegate = null, // does not matter, this is synthetic and has no annotations.
         filter = NO_USE_SITE
     ) {
+
+    override val enclosingElement: XExecutableElement get() = containing
 
     override val name: String by lazy {
         // KAPT uses `continuation` but it doesn't check for conflicts, we do.

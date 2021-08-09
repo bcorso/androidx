@@ -16,21 +16,27 @@
 
 package androidx.room.compiler.processing.compat
 
+import androidx.room.compiler.processing.XAnnotation
 import androidx.room.compiler.processing.XElement
 import androidx.room.compiler.processing.XExecutableElement
+import androidx.room.compiler.processing.XMessager
 import androidx.room.compiler.processing.XProcessingEnv
 import androidx.room.compiler.processing.XRoundEnv
 import androidx.room.compiler.processing.XType
 import androidx.room.compiler.processing.XTypeElement
 import androidx.room.compiler.processing.XVariableElement
+import androidx.room.compiler.processing.javac.JavacAnnotation
 import androidx.room.compiler.processing.javac.JavacElement
 import androidx.room.compiler.processing.javac.JavacExecutableElement
 import androidx.room.compiler.processing.javac.JavacProcessingEnv
+import androidx.room.compiler.processing.javac.JavacProcessingEnvMessager
 import androidx.room.compiler.processing.javac.JavacRoundEnv
 import androidx.room.compiler.processing.javac.JavacType
 import androidx.room.compiler.processing.javac.JavacTypeElement
 import androidx.room.compiler.processing.javac.JavacVariableElement
+import javax.annotation.processing.Messager
 import javax.annotation.processing.RoundEnvironment
+import javax.lang.model.element.AnnotationMirror;
 import javax.lang.model.element.Element
 import javax.lang.model.element.ExecutableElement
 import javax.lang.model.element.TypeElement
@@ -39,6 +45,9 @@ import javax.lang.model.type.TypeMirror
 
 // Migration APIs for converting between Javac and XProcessing types.
 object XConverters {
+
+    @JvmStatic
+    fun XMessager.toJavac(): Messager = (this as JavacProcessingEnvMessager).processingEnv.messager
 
     @JvmStatic
     fun XRoundEnv.toJavac(): RoundEnvironment = (this as JavacRoundEnv).delegate
@@ -57,6 +66,10 @@ object XConverters {
 
     @JvmStatic
     fun XType.toJavac(): TypeMirror = (this as JavacType).typeMirror
+
+    @JvmStatic
+    fun AnnotationMirror.toXProcessing(env: XProcessingEnv): XAnnotation =
+        JavacAnnotation(env as JavacProcessingEnv, this)
 
     @JvmStatic
     fun Element.toXProcessing(env: XProcessingEnv): XElement {

@@ -33,6 +33,10 @@ internal abstract class JavacElement(
     protected val env: JavacProcessingEnv,
     open val element: Element
 ) : XElement, XEquality, InternalXAnnotated {
+    override val enclosingElement: XElement? by lazy {
+        element.enclosingType(env)
+    }
+
     override fun <T : Annotation> getAnnotations(
         annotation: KClass<T>,
         containerAnnotation: KClass<out Annotation>?

@@ -32,7 +32,7 @@ interface XFieldElement : XVariableElement, XHasModifiers {
      *   [XTypeElement]. If you need the generated synthetic java class name, you can use
      *   [XMemberContainer.className] property.
      */
-    val enclosingElement: XMemberContainer
+    override val enclosingElement: XMemberContainer
 
     override val fallbackLocationText: String
         get() = "$name in ${enclosingElement.fallbackLocationText}"

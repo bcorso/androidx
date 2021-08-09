@@ -54,9 +54,8 @@ internal sealed class JavacTypeElement(
     override val className: ClassName by lazy {
         ClassName.get(element)
     }
-    override val enclosingTypeElement: XTypeElement? by lazy {
-        element.enclosingType(env)
-    }
+
+    override val enclosingTypeElement: XTypeElement? get() = enclosingElement as? XTypeElement
 
     private val _declaredFields by lazy {
         ElementFilter.fieldsIn(element.enclosedElements)

@@ -25,7 +25,7 @@ import javax.lang.model.element.Element
 import javax.tools.Diagnostic
 
 internal class JavacProcessingEnvMessager(
-    private val processingEnv: ProcessingEnvironment
+    val processingEnv: ProcessingEnvironment
 ) : XMessager() {
     override fun onPrintMessage(
         kind: Diagnostic.Kind,

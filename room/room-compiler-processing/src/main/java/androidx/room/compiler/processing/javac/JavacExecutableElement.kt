@@ -18,6 +18,7 @@ package androidx.room.compiler.processing.javac
 
 import androidx.room.compiler.processing.XExecutableElement
 import androidx.room.compiler.processing.XHasModifiers
+import androidx.room.compiler.processing.XMemberContainer
 import androidx.room.compiler.processing.XNullability
 import androidx.room.compiler.processing.javac.kotlin.KmExecutable
 import androidx.room.compiler.processing.javac.kotlin.descriptor
@@ -33,6 +34,8 @@ internal abstract class JavacExecutableElement(
 ),
     XExecutableElement,
     XHasModifiers by JavacHasModifiers(element) {
+    override val enclosingElement: XMemberContainer = super.enclosingElement as XMemberContainer
+
     abstract val kotlinMetadata: KmExecutable?
 
     val descriptor by lazy {

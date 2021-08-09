@@ -23,6 +23,7 @@ import androidx.room.compiler.processing.XEnumTypeElement
 import androidx.room.compiler.processing.XFieldElement
 import androidx.room.compiler.processing.XHasModifiers
 import androidx.room.compiler.processing.XMethodElement
+import androidx.room.compiler.processing.XMemberContainer
 import androidx.room.compiler.processing.XType
 import androidx.room.compiler.processing.XTypeElement
 import androidx.room.compiler.processing.ksp.KspAnnotated.UseSiteFilter.Companion.NO_USE_SITE
@@ -57,10 +58,11 @@ internal sealed class KspTypeElement(
         declaration.getNormalizedPackageName()
     }
 
-    override val enclosingTypeElement: XTypeElement? by lazy {
-        // if it is a file, don't return it
-        declaration.findEnclosingMemberContainer(env) as? XTypeElement
+    override val enclosingElement: XMemberContainer? by lazy {
+        declaration.findEnclosingMemberContainer(env)
     }
+
+    override val enclosingTypeElement: XTypeElement? get() = enclosingElement as? XTypeElement
 
     override val equalityItems: Array<out Any?> by lazy {
         arrayOf(declaration)

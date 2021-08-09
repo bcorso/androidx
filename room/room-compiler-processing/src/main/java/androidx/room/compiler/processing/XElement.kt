@@ -32,9 +32,15 @@ import kotlin.contracts.contract
  */
 interface XElement : XAnnotated {
     /**
+     * Returns the [XElement] that encloses this element, or null if there is none.
+     */
+    val enclosingElement: XElement?
+
+    /**
      * Returns the string representation of the Element's kind.
      */
     fun kindName(): String
+
     /**
      * When the location of an element is unknown, this String is appended to the diagnostic
      * message. Without this information, developer gets no clue on where the error is.
